@@ -9,25 +9,19 @@
     :root {
       --bg: #0a0a0f;
       --card: #12121a;
-      --border: #ff6b00;
       --accent: #ff6b00;
       --accent2: #ffaa00;
       --text: #f0f0f0;
       --muted: #888;
       --glow: 0 0 20px rgba(255,107,0,0.4);
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Rajdhani', sans-serif;
       min-height: 100vh;
-      overflow-x: hidden;
     }
-
-    /* Background grid effect */
     body::before {
       content: '';
       position: fixed;
@@ -39,7 +33,6 @@
       pointer-events: none;
       z-index: 0;
     }
-
     .container {
       max-width: 700px;
       margin: 0 auto;
@@ -47,13 +40,7 @@
       position: relative;
       z-index: 1;
     }
-
-    /* Header */
-    .header {
-      text-align: center;
-      padding: 40px 0 30px;
-    }
-
+    .header { text-align: center; padding: 40px 0 30px; }
     .logo {
       font-family: 'Orbitron', monospace;
       font-size: 2.2rem;
@@ -62,18 +49,8 @@
       text-shadow: var(--glow);
       letter-spacing: 4px;
     }
-
     .logo span { color: #fff; }
-
-    .tagline {
-      color: var(--muted);
-      font-size: 1rem;
-      margin-top: 6px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    /* Tabs */
+    .tagline { color: var(--muted); font-size: 1rem; margin-top: 6px; letter-spacing: 2px; text-transform: uppercase; }
     .tabs {
       display: flex;
       gap: 10px;
@@ -83,7 +60,6 @@
       padding: 6px;
       border: 1px solid #1e1e2e;
     }
-
     .tab {
       flex: 1;
       padding: 12px;
@@ -99,14 +75,332 @@
       transition: all 0.2s;
       text-transform: uppercase;
     }
-
-    .tab.active {
+    .tab.active { background: var(--accent); color: #fff; box-shadow: var(--glow); }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .box {
+      background: var(--card);
+      border: 1px solid #1e1e2e;
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .box label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .input-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .input-row input, .input-row select, .box input, .box textarea {
+      background: #0a0a0f;
+      border: 1px solid #2a2a3a;
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .input-row input { flex: 1; min-width: 130px; }
+    .input-row select { min-width: 130px; }
+    .box input { width: 100%; margin-bottom: 12px; }
+    .box textarea { width: 100%; resize: vertical; min-height: 100px; margin-bottom: 4px; }
+    .input-row input:focus, .input-row select:focus, .box input:focus, .box textarea:focus { border-color: var(--accent); }
+    .input-row select option { background: #12121a; }
+    .btn {
       background: var(--accent);
       color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-family: 'Orbitron', monospace;
+      font-size: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--accent2); box-shadow: var(--glow); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-full { width: 100%; padding: 14px; margin-top: 4px; }
+    .result-card {
+      background: var(--card);
+      border: 1px solid #1e1e2e;
+      border-radius: 14px;
+      padding: 24px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .result-card.show { display: block; }
+    @keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    .player-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #1e1e2e;
+    }
+    .avatar-box {
+      width: 64px; height: 64px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff6b00, #ffaa00);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      flex-shrink: 0;
       box-shadow: var(--glow);
     }
+    .player-name { font-family: 'Orbitron', monospace; font-size: 1.2rem; font-weight: 700; color: #fff; }
+    .player-id { color: var(--accent); font-size: 0.9rem; margin-top: 4px; letter-spacing: 1px; }
+    .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .info-item { background: #0a0a0f; border-radius: 10px; padding: 14px; border: 1px solid #1e1e2e; }
+    .info-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+    .info-value { font-size: 1.1rem; font-weight: 600; color: var(--text); }
+    .info-value.hl { color: var(--accent); }
+    .msg { border-radius: 10px; padding: 14px; margin-top: 14px; font-size: 0.95rem; display: none; line-height: 1.5; }
+    .msg.error { background: rgba(255,50,50,0.1); border: 1px solid rgba(255,50,50,0.3); color: #ff6b6b; display: block; }
+    .msg.success { background: rgba(0,200,100,0.1); border: 1px solid rgba(0,200,100,0.3); color: #00c864; display: block; }
+    .msg.info { background: rgba(255,170,0,0.1); border: 1px solid rgba(255,170,0,0.3); color: #ffaa00; display: block; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .warn-box { background: rgba(255,107,0,0.08); border: 1px solid rgba(255,107,0,0.3); border-radius: 10px; padding: 14px; margin-bottom: 16px; font-size: 0.9rem; color: #ffaa00; line-height: 1.5; }
+    .warn-box strong { display: block; margin-bottom: 4px; }
+    .char-count { text-align: right; color: var(--muted); font-size: 0.8rem; margin-bottom: 12px; }
+    .footer { text-align: center; padding-top: 40px; color: #333; font-size: 0.85rem; letter-spacing: 1px; }
+    .footer span { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="container">
 
-    /* Panels */
+  <div class="header">
+    <div class="logo">FF<span>INFO</span></div>
+    <div class="tagline">Free Fire Player Database</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('search')">🔍 Player Search</button>
+    <button class="tab" onclick="switchTab('bio')">✏️ Bio Edit</button>
+  </div>
+
+  <!-- SEARCH PANEL -->
+  <div class="panel active" id="panel-search">
+    <div class="box">
+      <label>Player ID aur Region enter karo</label>
+      <div class="input-row">
+        <input type="number" id="playerID" placeholder="Player ID (e.g. 123456789)"/>
+        <select id="region">
+          <option value="ind">🇮🇳 India</option>
+          <option value="br">🇧🇷 Brazil</option>
+          <option value="us">🇺🇸 USA</option>
+          <option value="sg">🇸🇬 Singapore</option>
+          <option value="id">🇮🇩 Indonesia</option>
+          <option value="tw">🇹🇼 Taiwan</option>
+          <option value="th">🇹🇭 Thailand</option>
+          <option value="vn">🇻🇳 Vietnam</option>
+          <option value="me">Middle East</option>
+          <option value="pk">🇵🇰 Pakistan</option>
+        </select>
+        <button class="btn" onclick="searchPlayer()" id="searchBtn">SEARCH</button>
+      </div>
+      <div class="msg" id="searchMsg"></div>
+    </div>
+
+    <div class="result-card" id="resultCard">
+      <div class="player-header">
+        <div class="avatar-box" id="avatarBox">🎮</div>
+        <div>
+          <div class="player-name" id="pName">—</div>
+          <div class="player-id" id="pID">ID: —</div>
+        </div>
+      </div>
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">Level</div><div class="info-value hl" id="pLevel">—</div></div>
+        <div class="info-item"><div class="info-label">Region</div><div class="info-value" id="pRegion">—</div></div>
+        <div class="info-item"><div class="info-label">Guild</div><div class="info-value" id="pGuild">—</div></div>
+        <div class="info-item"><div class="info-label">Guild Level</div><div class="info-value hl" id="pGuildLevel">—</div></div>
+        <div class="info-item"><div class="info-label">Likes</div><div class="info-value" id="pLikes">—</div></div>
+        <div class="info-item"><div class="info-label">BR Rank Points</div><div class="info-value" id="pRank">—</div></div>
+        <div class="info-item" style="grid-column:span 2"><div class="info-label">Bio / Signature</div><div class="info-value" id="pBio" style="font-size:0.95rem;word-break:break-word">—</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BIO EDIT PANEL -->
+  <div class="panel" id="panel-bio">
+    <div class="warn-box">
+      <strong>⚠️ Important</strong>
+      Access token aapka personal token hai — kisi ke saath share mat karo. Sirf apni bio edit karne ke liye use karo.
+    </div>
+    <div class="box">
+      <label>Your Player ID</label>
+      <input type="text" id="bioPlayerID" placeholder="Apna Player ID enter karo"/>
+      <label>Access Token</label>
+      <input type="password" id="accessToken" placeholder="Apna access token enter karo"/>
+      <label>New Bio (max 100 characters)</label>
+      <textarea id="newBio" placeholder="Apni naye bio likho..." maxlength="100"></textarea>
+      <div class="char-count"><span id="charCount">0</span>/100</div>
+      <button class="btn btn-full" onclick="editBio()" id="bioBtn">UPDATE BIO</button>
+      <div class="msg" id="bioMsg"></div>
+    </div>
+    <div class="box" style="border-color:rgba(255,107,0,0.2)">
+      <label>Access Token kaise milega?</label>
+      <div style="color:var(--muted);font-size:0.95rem;line-height:1.8">
+        1. Free Fire game open karo<br/>
+        2. Settings → Account → Linked Accounts<br/>
+        3. Token copy karo ya developer options se milta hai<br/>
+        4. <strong style="color:var(--accent)">Kabhi share mat karo!</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">Made with ❤️ by <span>dsdeepika61-bit</span></div>
+</div>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.tab').forEach((t,i) => {
+      t.classList.toggle('active', (i===0&&tab==='search')||(i===1&&tab==='bio'));
+    });
+    document.getElementById('panel-search').classList.toggle('active', tab==='search');
+    document.getElementById('panel-bio').classList.toggle('active', tab==='bio');
+  }
+
+  document.getElementById('newBio').addEventListener('input', function() {
+    document.getElementById('charCount').textContent = this.value.length;
+  });
+
+  const regionNames = {
+    ind:'India', br:'Brazil', us:'USA', sg:'Singapore',
+    id:'Indonesia', tw:'Taiwan', th:'Thailand', vn:'Vietnam',
+    me:'Middle East', pk:'Pakistan'
+  };
+
+  async function tryFetch(url, options={}) {
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  }
+
+  async function searchPlayer() {
+    const id = document.getElementById('playerID').value.trim();
+    const region = document.getElementById('region').value;
+    const btn = document.getElementById('searchBtn');
+    const msg = document.getElementById('searchMsg');
+    const card = document.getElementById('resultCard');
+
+    msg.className = 'msg'; msg.textContent = '';
+    if (!id || id.length < 5) {
+      msg.className = 'msg error';
+      msg.textContent = '❌ Valid Player ID enter karo (minimum 5 digits)';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Searching...';
+    card.classList.remove('show');
+
+    // Sab known FF info APIs try karenge
+    const endpoints = [
+      `https://ff-info-api.vercel.app/api?uid=${id}&region=${region}`,
+      `https://ffinfo-api.onrender.com/player?uid=${id}&region=${region}`,
+      `https://api.freefire.site/player?uid=${id}&region=${region}`,
+      `https://freefireinfo.vercel.app/api?uid=${id}&region=${region}`,
+    ];
+
+    let data = null;
+    for (const url of endpoints) {
+      try {
+        data = await tryFetch(url);
+        if (data && (data.basicInfo || data.nickname || data.name || data.AccountInfo)) break;
+        data = null;
+      } catch(e) { data = null; }
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'SEARCH';
+
+    if (!data) {
+      msg.className = 'msg error';
+      msg.textContent = '⚠️ Player info abhi load nahi hui. Reasons:\n• Player ID galat ho sakta hai\n• Region galat ho sakta hai\n• FF API temporarily down hai\n\nSahi ID aur region check karke dobara try karo.';
+      return;
+    }
+
+    try {
+      const info = data.basicInfo || data.AccountInfo || data;
+      const guild = data.clanBasicInfo || data.GuildInfo || null;
+
+      document.getElementById('pName').textContent = info.nickname || info.name || info.AccountName || 'Unknown';
+      document.getElementById('pID').textContent = 'ID: ' + (info.accountId || info.AccountId || id);
+      document.getElementById('pLevel').textContent = info.level || info.AccountLevel || '—';
+      document.getElementById('pRegion').textContent = regionNames[region] || region.toUpperCase();
+      document.getElementById('pGuild').textContent = guild ? (guild.clanName || guild.GuildName || 'No Guild') : 'No Guild';
+      document.getElementById('pGuildLevel').textContent = guild ? (guild.clanLevel || guild.GuildLevel || '—') : '—';
+      document.getElementById('pLikes').textContent = info.liked ? Number(info.liked).toLocaleString() : (info.AccountLikes || '0');
+      document.getElementById('pRank').textContent = info.rankingPoints || info.BrRankPoint || '—';
+      document.getElementById('pBio').textContent = info.signature || info.AccountSignature || '(No bio)';
+
+      const level = parseInt(info.level || info.AccountLevel) || 1;
+      const avatars = ['🎮','⚔️','🔥','💎','👑','🏆','🎯','⚡'];
+      document.getElementById('avatarBox').textContent = avatars[Math.min(Math.floor(level/10), avatars.length-1)];
+      card.classList.add('show');
+    } catch(e) {
+      msg.className = 'msg error';
+      msg.textContent = '❌ Data parse karne mein error. Dobara try karo.';
+    }
+  }
+
+  document.getElementById('playerID').addEventListener('keypress', e => {
+    if (e.key === 'Enter') searchPlayer();
+  });
+
+  async function editBio() {
+    const playerID = document.getElementById('bioPlayerID').value.trim();
+    const token = document.getElementById('accessToken').value.trim();
+    const bio = document.getElementById('newBio').value.trim();
+    const btn = document.getElementById('bioBtn');
+    const msg = document.getElementById('bioMsg');
+
+    msg.className = 'msg'; msg.textContent = '';
+    if (!playerID) { msg.className='msg error'; msg.textContent='❌ Player ID enter karo'; return; }
+    if (!token) { msg.className='msg error'; msg.textContent='❌ Access token enter karo'; return; }
+    if (!bio) { msg.className='msg error'; msg.textContent='❌ Naye bio likho'; return; }
+
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner"></span>Updating...';
+
+    try {
+      const res = await fetch('https://ff-info-api.vercel.app/api/update-bio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ uid: playerID, signature: bio })
+      });
+      if (res.ok) {
+        msg.className = 'msg success';
+        msg.textContent = '✅ Bio successfully update ho gayi!';
+        document.getElementById('newBio').value = '';
+        document.getElementById('charCount').textContent = '0';
+      } else {
+        throw new Error('Token invalid ya server ne reject kiya.');
+      }
+    } catch(e) {
+      msg.className = 'msg error';
+      msg.textContent = '❌ ' + (e.message || 'Error aaya. Token check karo.');
+    }
+
+    btn.disabled = false;
+    btn.textContent = 'UPDATE BIO';
+  }
+</script>
+</body>
+</html>
     .panel { display: none; }
     .panel.active { display: block; }
 
